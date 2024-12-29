@@ -1,10 +1,9 @@
-import { beforeAll, beforeEach, test, describe, expect, afterAll, afterEach } from 'vitest';
+import { beforeAll, test, describe, expect, afterAll, afterEach } from 'vitest';
 import { CashuMint } from '../src/CashuMint.js';
 import { CashuWallet } from '../src/CashuWallet.js';
 import { HttpResponse, http } from 'msw';
 import { setupServer } from 'msw/node';
 import { setGlobalRequestOptions } from '../src/request.js';
-import { MeltQuoteResponse } from '../src/model/types/index.js';
 import { HttpResponseError, NetworkError, MintOperationError } from '../src/model/Errors';
 
 const mintUrl = 'https://localhost:3338';
@@ -78,10 +77,7 @@ describe('requests', () => {
 		const mint = new CashuMint(mintUrl);
 		server.use(
 			http.get(mintUrl + '/v1/melt/quote/bolt11/test', () => {
-				return new HttpResponse(
-					JSON.stringify({ error: 'Not Found' }), 
-					{ status: 404 }
-				);
+				return new HttpResponse(JSON.stringify({ error: 'Not Found' }), { status: 404 });
 			})
 		);
 
@@ -105,10 +101,9 @@ describe('requests', () => {
 		const mint = new CashuMint(mintUrl);
 		server.use(
 			http.get(mintUrl + '/v1/melt/quote/bolt11/test', () => {
-				return new HttpResponse(
-					JSON.stringify({ code: 20003, detail: 'Minting disabled' }),
-					{ status: 400 }
-				);
+				return new HttpResponse(JSON.stringify({ code: 20003, detail: 'Minting disabled' }), {
+					status: 400
+				});
 			})
 		);
 

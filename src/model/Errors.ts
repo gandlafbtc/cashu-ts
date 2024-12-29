@@ -38,7 +38,7 @@ export class MintOperationError extends Error {
 			20006: 'Invoice already paid',
 			20007: 'Quote is expired'
 		};
-		super(messages[code] || 'Unknown mint operation error');
+		super(messages[code] || detail || 'Unknown mint operation error');
 		this.code = code;
 		this.detail = detail;
 		this.name = 'MintOperationError';
